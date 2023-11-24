@@ -17,6 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {/* Note add prettier file */}
       <ThemeRegistry>      <body className={inter.className}>{children}</body></ThemeRegistry>
     </html>
   )
