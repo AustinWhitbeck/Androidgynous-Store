@@ -2,12 +2,16 @@
 import { ProductInfoShort } from '@/models';
 import React, { createContext, useReducer, useContext } from 'react';
 
+export type CartProduct = ProductInfoShort & {
+    quantity: number;
+}
+
 export type CartState = {
-        items: ProductInfoShort[];
+        items: CartProduct[];
 }
 
 export type CartAction = {
-        type: 'ADD_ITEM' | 'REMOVE_ITEM';
+        type: 'ADD_ITEM' | 'REMOVE_ITEM' | 'DECREMENT_ITEM' | 'EMPTY_CART';
         payload: ProductInfoShort;
 }
 
@@ -16,7 +20,9 @@ type CartContextType = {
     state: CartState;
     dispatch: React.Dispatch<CartAction>;
     addItemToCart: (item: ProductInfoShort) => void;
+    decrementItemFromCart: (item: ProductInfoShort) => void;
     removeItemFromCart: (item: ProductInfoShort) => void;
+    emptyCart: () => void;
   };
   
 const initialState: CartState = {
@@ -27,7 +33,9 @@ export const CartContext = createContext<CartContextType>({
     state: initialState,
     dispatch: () => {},// Empty placeholder function
     addItemToCart: (item: ProductInfoShort) => {},
+    decrementItemFromCart: (item: ProductInfoShort) => {},
     removeItemFromCart: (item: ProductInfoShort) => {},
+    emptyCart: () => {},
   });
   
 
@@ -36,15 +44,86 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     switch (action.type) {
         case 'ADD_ITEM':
             // Logic to add item
-            return {
-                ...state,
-                items: [...state.items, action.payload],
+
+            // Work Flow
+            // 1. Check if an item with the same ID is already in the cart
+            // 2. If it is, increment the quantity by 1
+            // 3. If not, add the item to the cart
+
+            // 1. Check if an item with the same ID is already in the cart
+            // returns index if found and returns -1 if it's not found.
+            const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
+            console.log('itemIndex in add_item', itemIndex);
+
+            if (itemIndex === -1) {
+                // 2. if it's not in the cart, create new entry
+                const uniqueNewItem = {
+                    ...action.payload,
+                    quantity: 1,
+                }
+                return {
+                    ...state,
+                    items: [...state.items, uniqueNewItem],
+                };
+            } else {
+                // 3. if it's in the cart already, increment quantity by 1
+                const updatedItems = [...state.items];
+                const updatedItem = {
+                    ...updatedItems[itemIndex],
+                    quantity: updatedItems[itemIndex].quantity + 1,
+                };
+                updatedItems[itemIndex] = updatedItem;
+                return {
+                    ...state,
+                    items: updatedItems,
+                };
+            }
+               
+        case 'DECREMENT_ITEM':
+            // Logic to decrement item
+
+            // Work Flow
+            // 1. Check if an item with the same ID is already in the cart
+            // 2. If it is, decrement the quantity by 1
+            // 3. If not, return the current state
+
+            // 1. Check if an item with the same ID is already in the cart
+            const itemIndexDecrement = state.items.findIndex(item => item.id === action.payload.id);
+
+            // if item is not in cart, just return the current state
+            if (itemIndexDecrement === -1) {
+                return state;
             };
+                // 2. If it is, decrement the quantity by 1
+                const updatedItems = [...state.items];
+                // reduce quantity by 1
+                const updatedItem = {
+                    ...updatedItems[itemIndexDecrement],
+                    quantity: updatedItems[itemIndexDecrement].quantity - 1,
+                };
+                // if quantity is 0, remove item from cart
+                if (updatedItem.quantity === 0) {
+                    updatedItems.splice(itemIndexDecrement, 1);
+                }
+                // if quantity is greater than 0, update item in cart
+                if (updatedItem.quantity > 0) {
+                    updatedItems[itemIndexDecrement] = updatedItem;
+                }
+                return {
+                    ...state,
+                    items: updatedItems,
+                };
+
         case 'REMOVE_ITEM':
-            // Logic to remove item
+            // Logic to remove all of an item
             return {
                 ...state,
                 items: state.items.filter(item => item.id !== action.payload.id),
+            };
+        case 'EMPTY_CART':
+            return {
+                ...state,
+                items: [],
             };
         default:
             return state;
@@ -62,9 +141,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       function removeItemFromCart(item: ProductInfoShort) {
         dispatch({ type: 'REMOVE_ITEM', payload: item });
       }
+      function decrementItemFromCart(item: ProductInfoShort) {
+        dispatch({ type: 'DECREMENT_ITEM', payload: item });
+      }
+      function emptyCart() {
+        dispatch({ type: 'EMPTY_CART', payload: {     name: '',
+            price: 0,
+            id: 0,
+            productDetailLink: ''} });
+      }
 
     return (
-        <CartContext.Provider value={{ state, dispatch, addItemToCart, removeItemFromCart }}>
+        <CartContext.Provider value={{ state, dispatch, addItemToCart, decrementItemFromCart, removeItemFromCart, emptyCart }}>
             {children}
         </CartContext.Provider>
     );
