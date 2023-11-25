@@ -1,4 +1,5 @@
 import TopNavigation from '@/components/TopNavigation'
+import { CartProvider } from '@/providers/CartContext'
 import ThemeRegistry from '@/providers/ThemeRegistery'
 import { Stack } from '@mui/material'
 import type { Metadata } from 'next'
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       {/* Note add prettier file */}
       <ThemeRegistry>      
+        <CartProvider>
         <body className={inter.className}>
           <Stack sx={{  height: '100vh'}}>
             <TopNavigation />
@@ -29,6 +31,7 @@ export default function RootLayout({
             </Stack>
           </Stack>
           </body>
+          </CartProvider>
       </ThemeRegistry>
     </html>
   )

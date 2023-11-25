@@ -1,7 +1,6 @@
 export type ProductInfoShort = {
     name: string;
     price: number;
-    // image: string;
-    // altImageDescription: string;
+    id: number;
     productDetailLink: string;
 }
