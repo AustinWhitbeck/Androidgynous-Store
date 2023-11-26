@@ -15,13 +15,11 @@ export const CartItem = ({ name, price, productDetailLink, id, quantity}: CartPr
         <Box sx={{ width: '100%', border: 'solid 2px black', borderRadius: '5px'}}>
             <p>{name}</p>
             <p>{price}</p>
-            <p>{productDetailLink}</p>
-            <p>ID: {id}</p>
-            <Box sx={{ display: 'flex', gap: '5px'}}>
+            <Box sx={{ display: 'flex', gap: '5px', alignItems: 'center'}}>
                 <IconButton onClick={() => addItemToCart({ name, price, productDetailLink, id})}>
                     <AddCircleIcon />
                 </IconButton>
-                <Typography variant="body1">{quantity}</Typography>
+                <Typography variant="body1" sx={{ minWidth: '30px', textAlign: 'center'}}>{quantity}</Typography>
                 <IconButton onClick={() => decrementItemFromCart({ name, price, productDetailLink, id})}>
                     <RemoveCircleIcon />
                 </IconButton>
@@ -31,9 +29,6 @@ export const CartItem = ({ name, price, productDetailLink, id, quantity}: CartPr
 
             </Box>
             <Link href={productDetailLink} passHref >Details</Link>
-            <Button onClick={() => removeItemFromCart({ name, price, productDetailLink, id})}>Remove from Cart</Button>
-            <Button onClick={() => addItemToCart({ name, price, productDetailLink, id})}>Increment to Cart</Button>
-            <Button onClick={() => decrementItemFromCart({ name, price, productDetailLink, id})}>Decrement from Cart</Button>
         </Box>
     )
     }
