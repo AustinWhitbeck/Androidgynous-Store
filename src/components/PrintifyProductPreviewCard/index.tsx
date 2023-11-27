@@ -8,6 +8,7 @@ import Link from "next/link";
 const PrintifyProductPreviewCard = (product: PrintifyProduct) => {
     const { title, description, id, images} = product;
     console.log('images', images);
+    console.log('variants', product.variants);
 //   const { addItemToCart } = useCart();
 
     const defaultImage = images.find((image) => image.is_default === true) ?? { src: 'No Default Image' };
@@ -17,10 +18,7 @@ const PrintifyProductPreviewCard = (product: PrintifyProduct) => {
             <Typography>{title}</Typography>
             {/* <Link href={`/shirts/details/${id}`} passHref > */}
             <Box sx={{ height: '100px', width: '60px'}}>
-                <Box sx={{ width: '100%', height: '100%', backgroundColor: 'gray'}}>
-                    Placeholder Image
-                </Box>
-            <Image src={defaultImage.src} alt={title} width={200} height={300} />
+                <Image src={defaultImage.src} alt={title} width={200} height={300} />
             </Box>
             {/* </Link> */}
             {/* <Typography variant="body1">{description}</Typography> */}
