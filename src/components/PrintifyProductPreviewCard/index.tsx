@@ -18,7 +18,7 @@ const PrintifyProductPreviewCard = (product: PrintifyProduct) => {
             <Typography>{title}</Typography>
             {/* <Link href={`/shirts/details/${id}`} passHref > */}
             <Box sx={{ height: '100px', width: '60px'}}>
-                <Image src={defaultImage.src} alt={title} width={200} height={300} />
+                <Image src={defaultImage.src} alt={title} width={250} height={300} />
             </Box>
             {/* </Link> */}
             {/* <Typography variant="body1">{description}</Typography> */}
