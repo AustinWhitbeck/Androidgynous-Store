@@ -53,7 +53,6 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
             // 1. Check if an item with the same ID is already in the cart
             // returns index if found and returns -1 if it's not found.
             const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
-            console.log('itemIndex in add_item', itemIndex);
 
             if (itemIndex === -1) {
                 // 2. if it's not in the cart, create new entry

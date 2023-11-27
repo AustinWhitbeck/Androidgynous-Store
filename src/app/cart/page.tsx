@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Metadata } from "next";
 import CartClientPage from "./client";
 
@@ -10,8 +10,10 @@ export const metadata: Metadata = {
 const CartPage = () => {
   return (
     <>
-        <Typography variant="h1"> WIP Shopping Cart</Typography>
+      <Typography variant="h1">Cart</Typography>
+      <Box sx={{ padding: '20px'}}>
         <CartClientPage />
+      </Box>
     </>
   )
 }

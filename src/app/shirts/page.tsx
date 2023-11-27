@@ -52,7 +52,7 @@ const ShirtsPage = () => {
     <Stack>
         <Typography variant="h1">All Shirts</Typography>
         <CheckCartButton />
-        <Grid container xs={12} sx={{ padding: '10px'}}>
+        <Grid container sx={{ padding: '10px'}}>
             {mockShirtProducts.map((mockShirt) => {
                 return(
                     <Grid item xs={12} sm={6} md={4}>

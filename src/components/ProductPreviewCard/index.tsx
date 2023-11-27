@@ -6,17 +6,8 @@ import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 const ProductPreviewCard = ({ name, price, productDetailLink, id}: ProductInfoShort) => {
-  const { state, dispatch, addItemToCart } = useCart();
-  console.log('state', state);
+  const { addItemToCart } = useCart();
 
-
-  // function addItemToCart(item: ProductInfoShort) {
-  //   dispatch({ type: 'ADD_ITEM', payload: item });
-  // }
-
-  function removeItemFromCart(item: ProductInfoShort) {
-    dispatch({ type: 'REMOVE_ITEM', payload: item });
-  }
   return (
         <Stack sx={{ width: '100px', height: '200px'}}>
             <Typography>{name}</Typography>
