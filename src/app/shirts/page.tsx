@@ -1,10 +1,9 @@
 import ProductPreviewCard from "@/components/ProductPreviewCard";
 import { ProductInfoShort } from "@/models";
-import { Button, Grid, Stack, Typography } from "@mui/material"
-
-
+import { Grid, Stack, Typography } from "@mui/material"
 import { Metadata } from "next";
-import { CheckCartButton } from "./client-components";
+import { getAllTShirts } from "./actions";
+import PrintifyProductPreviewCard from "@/components/PrintifyProductPreviewCard";
 
 export const metadata: Metadata = {
     title: 'Shirts',
@@ -46,17 +45,29 @@ const mockShirtProducts: ProductInfoShort[] = [
     },
 ]
 
-const ShirtsPage = () => {
+const ShirtsPage = async () => {
+
+  const tShirts = await getAllTShirts();
+  console.log('tShirts', tShirts);
 
   return (
     <Stack>
         <Typography variant="h1">All Shirts</Typography>
-        <CheckCartButton />
-        <Grid container sx={{ padding: '10px'}}>
+        {/* <Grid container sx={{ padding: '10px'}}>
             {mockShirtProducts.map((mockShirt) => {
                 return(
                     <Grid item xs={12} sm={6} md={4}>
                         <ProductPreviewCard {...mockShirt} />
+                    </Grid>
+                )
+            })}
+        </Grid> */}
+
+        <Grid container sx={{ padding: '10px'}}>
+            {tShirts.data.map((shirt) => {
+                return(
+                    <Grid item xs={12} sm={6} md={4} key={`${shirt.id}`}>
+                        <PrintifyProductPreviewCard {...shirt} />
                     </Grid>
                 )
             })}

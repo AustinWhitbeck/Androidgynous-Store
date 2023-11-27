@@ -1,8 +1,8 @@
-import { Stack, Typography } from "@mui/material"
+import {  Stack, Typography } from "@mui/material"
 import MainIcon from "../images/icon_version_3.png";
 import Image from "next/image";
 
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <Stack sx={{ alignItems: 'center'}}>
       <Typography variant="h1" sx={{ color: 'navy'}}>Androidgynous</Typography>
