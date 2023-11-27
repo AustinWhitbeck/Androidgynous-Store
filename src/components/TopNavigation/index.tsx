@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Drawer, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -11,6 +12,10 @@ const TopNavigation = () => {
 
   // States
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
+  const routes = [
+    { name: 'Shirts', path: '/shirts'}
+  ];
   useEffect(() => {
     setDrawerOpen(false);
   }, [url])
@@ -24,13 +29,20 @@ const TopNavigation = () => {
           <Typography> Androidgynous</Typography>
         </Link>
         <Link href="/cart" passHref>
-          <Box sx={{ borderRadius: '50%', backgroundColor: 'white', height: '20px', width: '20px'}}/>
+          <IconButton>
+            <ShoppingCartIcon />
+          </IconButton>
         </Link>
       </Box>
       <Drawer variant="temporary" open={drawerOpen} onClose={() => setDrawerOpen(false)} PaperProps={{ sx: { width: '200px'}}}>
-        <Link href="/shirts" passHref>
-          <Button onClick={() => console.log('navigate to new route')}>Shirts</Button>
-        </Link>
+        {routes.map((route, index) => {
+            return(
+              <Link href={route.path} passHref key={`${route.name}-${index}`}>
+                <Button>{route.name}</Button>
+              </Link>
+            )
+          })
+        }
       </Drawer>
       </>
   )
