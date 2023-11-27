@@ -1,8 +1,9 @@
 'use client';
-import { Box, Button, Drawer, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Button, Drawer, IconButton, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 const TopNavigation = () => {
   // Hooks
@@ -16,7 +17,9 @@ const TopNavigation = () => {
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '40px', width: '100%', padding: '10px', backgroundColor: 'gray'}}>
-        <Button onClick={() => setDrawerOpen(true)}>Open</Button>
+        <IconButton onClick={() => setDrawerOpen(true)}>
+          <MenuIcon />
+        </IconButton>
         <Link href="/" style={{ textDecoration: 'none'}}>
           <Typography> Androidgynous</Typography>
         </Link>
